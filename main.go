@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/kwanok/podonine/repository"
 	"gorm.io/driver/sqlite"
@@ -22,6 +23,10 @@ func main() {
 	if err != nil {
 		return
 	}
+
+	var product = repository.Product{}
+	db.First(&product)
+	fmt.Println("product:", product)
 
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
