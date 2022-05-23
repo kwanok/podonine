@@ -24,9 +24,11 @@ func main() {
 		return
 	}
 
-	var product = repository.Product{}
-	db.First(&product)
-	fmt.Println("product:", product)
+	repository.Init()
+	productRepository := repository.ProductRepository{Db: repository.Gorm}
+	product := productRepository.GetProductById(1)
+	fmt.Println(product)
+	fmt.Println(product.GetSeats())
 
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
