@@ -26,7 +26,10 @@ type ProductRepository struct {
 func (repo *ProductRepository) GetProductById(id uint) models.Product {
 	var product Product
 	product.ID = id
-	repo.Db.First(&product)
+	result := repo.Db.First(&product)
+	if result.Error != nil {
+		return nil
+	}
 
 	return &product
 }

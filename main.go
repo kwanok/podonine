@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/kwanok/podonine/repository"
+	"github.com/kwanok/podonine/routes"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -25,10 +25,6 @@ func main() {
 	}
 
 	repository.Init()
-	productRepository := repository.ProductRepository{Db: repository.Gorm}
-	product := productRepository.GetProductById(1)
-	fmt.Println(product)
-	fmt.Println(product.GetSeats())
 
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
@@ -36,5 +32,7 @@ func main() {
 			"message": "pong",
 		})
 	})
+	routes.Routes(r)
+
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
